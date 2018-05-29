@@ -1,7 +1,7 @@
 {
   "name": "xxxwer/pdftohtml-poppler",
   "description": "This PHP class can convert your pdf files to html using poppler-utils.",
-  "license": "GNU GENERAL PUBLIC LICENSE",
+  "license": "GPL-1.0",
   "authors": [
     {
       "name": "Anton Nikolaev origin and xxxwer modify little",
