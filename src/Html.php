@@ -22,6 +22,7 @@ class Html extends Base
 {
     private $pages = 0;
     private $content = [];
+    private $finfo = null;
 
     private $defaultOptions = [
         'inlineCss' => true,
@@ -33,6 +34,12 @@ class Html extends Base
     public function __construct($options=[])
     {
         $this->setOptions(array_replace_recursive($this->defaultOptions, $options));
+        $this->finfo = finfo_open(FILEINFO_MIME_TYPE);
+    }
+
+    public function __destruct() {
+        finfo_close($this->finfo);
+        $this->finfo = null;
     }
 
     /**
@@ -107,7 +114,7 @@ class Html extends Base
             $pi = pathinfo($attrImage);
             $image = $this->getOutputDir() . '/' . $pi['basename'];
             $imageData = base64_encode(file_get_contents($image));
-            $src = 'data: ' . mime_content_type($image) . ';base64,' . $imageData;
+            $src = 'data: ' . finfo_file($this->finfo, $image) . ';base64,' . $imageData;
             $content = str_replace($attrImage, $src, $content);
         }
         unset($dom, $xpath, $images, $imageData);
